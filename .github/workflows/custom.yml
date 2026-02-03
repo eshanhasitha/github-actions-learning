@@ -1,0 +1,29 @@
+name: Custom Workflow
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  test-sample-app:
+    name: Install & Test (sample-app)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: sample-app/package-lock.json
+
+      - name: Install dependencies
+        working-directory: sample-app
+        run: npm install
+
+      - name: Run tests
+        working-directory: sample-app
+        run: npm test
