@@ -1,0 +1,23 @@
+name: Conditional Workflow
+
+on:
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  conditional-job:
+    name: Conditional Steps Demo
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Always run
+        run: echo "🚀 This step runs on every branch"
+
+      - name: Develop only step
+        if: github.ref == 'refs/heads/develop'
+        run: echo "🛠 Running on develop branch"
+
+      - name: Deploy (main only)
+        if: github.ref == 'refs/heads/main'
+        run: echo "🔥 Deploying to production..."
