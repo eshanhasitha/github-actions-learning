@@ -78,7 +78,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: build-output
+          name: build-output-${{ matrix.node-version }}
           path: output.txt
        
   download-artifact:
@@ -91,7 +91,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: build-output
+          name: build-output-18.x
           path: ./downloaded
 
       - name: Show downloaded files
