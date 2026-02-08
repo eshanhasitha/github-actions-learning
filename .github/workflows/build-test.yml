@@ -72,6 +72,34 @@ jobs:
           else
             echo "⚠️ No coverage report found"
           fi
+      - name: Create artifact
+        run: echo "Build output" > output.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: output.txt
+       
+  download-artifact:
+    name: Download Build Artifact
+    runs-on: ubuntu-latest
+    needs: [build-and-test]
+    if: always()
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: ./downloaded
+
+      - name: Show downloaded files
+        run: |
+          echo "Downloaded contents:"
+          ls -la ./downloaded
+          echo "-----"
+          cat ./downloaded/output.txt
 
   lint-check:
     name: Lint Check
